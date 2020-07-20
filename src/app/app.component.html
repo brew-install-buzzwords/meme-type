@@ -6,7 +6,7 @@
     <div class="input-area">
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Input</label>
-            <textarea [(ngModel)]="model.textAreaInput" (change)="onChange()" class="form-control" id="textarea1" rows="3"></textarea>
+            <textarea [(ngModel)]="model.textAreaInput" (ngModelChange)="textAreaInputChange($event)" class="form-control" id="textarea1" rows="3"></textarea>
         </div>
     
         <div class="form-group">
@@ -16,7 +16,7 @@
             </select>
         </div>
     
-        <div class="form-group" *ngIf="model.conversionFunctionName === 'l33t1fy'">
+        <div class="form-group" *ngIf="model.conversionFunctionName === 'l33t'">
             <label for="formControlSelect2">l33t teyep3</label>
             <select [(ngModel)]="model.options.substitutionType" (change)="onChange()" class="form-control" id="exampleFormControlSelect2">
                 <option *ngFor="let opt of substitutionOptions" [value]="opt.value">{{opt.label}}</option>
