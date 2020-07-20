@@ -25,10 +25,8 @@
     </div>
 
     <div class="result" *ngIf="result">
-    <h3 class="text">Result:</h3>
-    <div [innerText]="result"></div>
-
-        
+        <h3 class="text">Result:</h3>
+        <div [innerText]="result"></div>            
     </div>
     <button type="button" class="btn button-outline-secondary" (click)="reset()">Reset</button>
     <button type="button" class="btn button-outline-primary" (click)="copyText(result)">Copy Result</button>

@@ -2,23 +2,31 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import * as Emoji from 'node-emoji';
 import * as randomEmoji from 'random-emoji';
 
-interface modelInterface {
+interface ModelInterface {
+  /** the text area input */
   textAreaInput: string;
+  /** name of the conversion function */
   conversionFunctionName: string;
+  /** conversion function options */
   options?: any;
-};
+}
 
 interface ConversionOption {
+  /** label for the conversion option */
   label: string;
-  converter: Function;
+  /** function to carry out the conversion */
+  converter: (text: string, options?: any) => string;
 }
 
 interface SubstitutionOption {
+  /** label for the substitution option */
   label: string;
+  /** value for the substitution option */
   value;
 }
 
-interface l33t1fyOptions {
+interface L33t1fyOptions {
+  /** types of l33t1fy substitutions */
   substitutionType: 'numbers' | 'big' | 'symbols' | 'homophones';
 }
 
@@ -31,7 +39,7 @@ const numbers = {
   o: '0',
   p: '9',
   s: '5',
-}
+};
 
 const bigLetters = {
   a: '/-\\',
@@ -69,7 +77,7 @@ const symbols = {
   t: '+',
   u: 'μ',
   z: '%',
-}
+};
 
 const homophones = {
   a: 'aye',
@@ -80,7 +88,11 @@ const homophones = {
   s: 'ehs',
   x: 'ecks',
   z: 's',
-}
+};
+
+/**
+ * AppComponent
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -92,16 +104,16 @@ const homophones = {
 export class AppComponent implements OnInit{
 
 
+  /** app title */
   public title = 'meme-type';
-  
-
-  public model: modelInterface;
+  /** data model */
+  public model: ModelInterface;
+  /** results */
   public result;
 
-  ngOnInit() {
-    this.reset();
-  }
-
+  /**
+   * options for the conversion type dropdown
+   */
   public conversionOptions: ConversionOption[] = [
     {
       label: 'CLAPS 👏 AND 👏 ALL 👏 CAPS',
@@ -129,6 +141,9 @@ export class AppComponent implements OnInit{
     },
   ];
 
+  /**
+   * options for l33t substitutions
+   */
   public substitutionOptions: SubstitutionOption[] = [
     {
       label: 'numbers',
@@ -148,35 +163,54 @@ export class AppComponent implements OnInit{
     },
   ];
 
-  
+  /**
+   * Initializes component
+   */
+  ngOnInit(): void {
+    this.reset();
+  }
 
-  public clapify(text: string) : string {
+  /**
+   * Transforms text to be all caps with clap emojis between each word
+   * @param text the text to be transformed
+   * @returns the text with clap emojis
+   */
+  public clapify(text: string): string {
     const arr: string[] = text?.toUpperCase()
                                .split(/(\s+)/)
                                .filter( e => e.trim().length > 0 );
-  
+
     return arr?.length ? arr.join(' 👏 ') : '';
   }
-  
-  public altCapify(text: string) : string {
-    let ret = '';
+
+  /**
+   * Transforms text to have alternating capitalization
+   * @param text the text to be transformed
+   * @returns the text with alternating capitalization
+   */
+  public altCapify(text: string): string {
     const arr = text.split('');
     for (let i = 0; i < arr.length; i++) {
       arr[i] = i % 2 ? arr[i].toUpperCase() : arr[i].toLowerCase();
     }
-  
+
     return arr.join('');
   }
-  
-  public emojify(text: string) : string {
+
+  /**
+   * Inserts emojis into text
+   * @param text the source text
+   * @returns the text with emojis
+   */
+  public emojify(text: string): string {
     const textArr = text.split(/(\s+)/).filter( e => e.trim().length > 0 );
-  
-    let newTextArr = [];
+
+    const newTextArr = [];
     textArr.forEach(x => {
       newTextArr.push(x);
-      newTextArr.push(`:${x.replace(/[^a-zA-Z ]/g, "")}:`);
+      newTextArr.push(`:${x.replace(/[^a-zA-Z ]/g, '')}:`);
     });
-  
+
     return Emoji.emojify(newTextArr.join(' '), () => {
       const emojiCount = (Math.random() * 6) - 2;
       if (emojiCount > 0) {
@@ -191,12 +225,17 @@ export class AppComponent implements OnInit{
     });
   }
 
+  /**
+   * Translates text into keyboard smashing
+   * @param text the text to be translated
+   * @returns the generated keysmash text
+   */
   public smashify(text: string): string {
-    const leftHandKeys = ['a','s','d','f','g'];
-    const rightHandKeys = ['h','j','k','l',';'];
+    const leftHandKeys = ['a', 's', 'd', 'f', 'g'];
+    const rightHandKeys = ['h', 'j', 'k', 'l', ';'];
 
     const chars = [];
-    const startingChars = ['a','s','d','f'];
+    const startingChars = ['a', 's', 'd', 'f'];
 
     let hand = leftHandKeys;
     for (let i = 0; i < text.length; i++) {
@@ -222,14 +261,22 @@ export class AppComponent implements OnInit{
 
     return chars.join('');
   }
-  
-  public l33t1fy(text: string, options: l33t1fyOptions) : string {
+
+  /**
+   * Translates the text into l33t sp34k
+   * @param text the text to be translated
+   * @param options options
+   * @returns the translated text
+   */
+  public l33t1fy(text: string, options: L33t1fyOptions): string {
     let characterMap = {};
     let preserveCapitalization = false;
 
-    if (!options?.substitutionType) return '';
-    
-    switch(options?.substitutionType) {
+    if (!options?.substitutionType) {
+      return '';
+    }
+
+    switch (options?.substitutionType) {
       case 'numbers':
         characterMap = numbers;
         break;
@@ -244,35 +291,50 @@ export class AppComponent implements OnInit{
         preserveCapitalization = true;
         break;
     }
-  
+
     const transformedText = [];
     text.split('').forEach(c => {
       // TODO: preserve capitalization for homophones
       transformedText.push(characterMap[c.toLowerCase()] || c);
-    })
-    
+    });
+
     return transformedText.join('');
   }
 
+  /**
+   * Text transform for spaced out text
+   * @param text the text to be transformed
+   * @returns the spaced out text
+   */
   public spaceify(text: string): string {
     return text.split('').join(' ');
   }
 
-  public submit(submission: modelInterface) {
+  /**
+   * Submits a model to generate results
+   * @param submission the model to be submitted
+   */
+  public submit(submission: ModelInterface): void {
     const converter = this.conversionOptions.find(opt => opt.label === submission.conversionFunctionName)?.converter;
     if (converter) {
       this.result = converter(submission.textAreaInput, submission.options);
     }
   }
 
-  public onChange() {
+  /**
+   * Updates model and results on form changes
+   */
+  public onChange(): void {
     this.clearResult();
     this.submit(this.model);
   }
 
-  /* To copy any Text */
-  public copyText(val: string){
-    let selBox = document.createElement('textarea');
+  /**
+   * Copies text to the clipbooard
+   * @param val the text to be copied
+   */
+  public copyText(val: string): void {
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
@@ -285,11 +347,17 @@ export class AppComponent implements OnInit{
     document.body.removeChild(selBox);
   }
 
-  public clearResult() {
+  /**
+   * Clears the results
+   */
+  public clearResult(): void {
     this.result = '';
   }
 
-  public reset() {
+  /**
+   * Resets the state to the default values
+   */
+  public reset(): void {
     this.model = {
       textAreaInput: '',
       conversionFunctionName: 'clapify',
@@ -298,7 +366,11 @@ export class AppComponent implements OnInit{
     this.clearResult();
   }
 
-  public textAreaInputChange(event) {
+  /**
+   * Monitors live update of text area input
+   * @param event text area input
+   */
+  public textAreaInputChange(event): void {
     this.model.textAreaInput = event;
     this.submit(this.model);
   }
