@@ -259,11 +259,10 @@ export class AppComponent implements OnInit{
   }
 
   public submit(submission: modelInterface) {
-    // console.log(typeof(submission.conversionFunction));
-    console.log(submission);
     const converter = this.conversionOptions.find(opt => opt.label === submission.conversionFunctionName)?.converter;
-    console.log(JSON.stringify(submission?.options?.substitutionType));
-    this.result = converter(submission.textAreaInput, submission.options);
+    if (converter) {
+      this.result = converter(submission.textAreaInput, submission.options);
+    }
   }
 
   public onChange() {
@@ -297,5 +296,10 @@ export class AppComponent implements OnInit{
       options: {},
     };
     this.clearResult();
+  }
+
+  public textAreaInputChange(event) {
+    this.model.textAreaInput = event;
+    this.submit(this.model);
   }
 }
