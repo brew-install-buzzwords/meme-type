@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Emoji from 'node-emoji';
 import * as randomEmoji from 'random-emoji';
 
@@ -93,9 +93,6 @@ const homophones = {
 /**
  * AppComponent
  */
-@Injectable({
-  providedIn: 'root'
-})
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
