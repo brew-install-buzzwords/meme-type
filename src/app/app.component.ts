@@ -205,7 +205,10 @@ export class AppComponent implements OnInit{
     const newTextArr = [];
     textArr.forEach(x => {
       newTextArr.push(x);
-      newTextArr.push(`:${x.replace(/[^a-zA-Z ]/g, '')}:`);
+      const emojiTag = `:${x.replace(/[^a-zA-Z ]/g, '')}:`
+      if (emojiTag !== '::') {
+        newTextArr.push(emojiTag);
+      }
     });
 
     return Emoji.emojify(newTextArr.join(' '), () => {
