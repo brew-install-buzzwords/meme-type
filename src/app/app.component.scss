@@ -16,7 +16,13 @@ textarea {
     padding: 5px;
     &:focus {
         border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
     }
+    &:hover {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+    
 }
 
 select {
@@ -24,6 +30,11 @@ select {
     padding: 5px;
     &:focus {
         border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+    &:hover {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
     }
 }
 
@@ -53,6 +64,7 @@ a.home-link {
     &:hover {
         color: black;
         background-color: yellow;
+        transition: background 0.3s ease-in-out;
     }
 }
 
