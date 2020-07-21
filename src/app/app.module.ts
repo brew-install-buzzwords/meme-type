@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 
+/** App module */
 @NgModule({
   declarations: [
     AppComponent
