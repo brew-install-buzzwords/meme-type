@@ -1,0 +1,36 @@
+<div class="col-md-12">
+    <h1 class="text-center base-margin-top"><a class="home-link" href="#" [innerText]="title"></a></h1>
+    <h5 class="text-center">a <a class="home-link" href="https://www.brewinstallbuzzwords.com" target="_blank">brew install buzzwords</a> site</h5>
+    <p></p>
+
+    <div class="input-area">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Input</label>
+            <textarea [(ngModel)]="model.textAreaInput" (ngModelChange)="textAreaInputChange($event)" class="form-control" id="textarea1" rows="3"></textarea>
+        </div>
+    
+        <div class="form-group">
+            <label for="formControlSelect1">Conversion</label>
+            <select [(ngModel)]="model.conversionFunctionName" (change)="onChange()" class="form-control" id="exampleFormControlSelect1">
+                <option *ngFor="let opt of conversionOptions" [value]="opt.label">{{opt.label}}</option>
+            </select>
+        </div>
+    
+        <div class="form-group" *ngIf="model.conversionFunctionName === 'l33t'">
+            <label for="formControlSelect2">l33t teyep3</label>
+            <select [(ngModel)]="model.options.substitutionType" (change)="onChange()" class="form-control" id="exampleFormControlSelect2">
+                <option *ngFor="let opt of substitutionOptions" [value]="opt.value">{{opt.label}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="result" *ngIf="result">
+        <h3 class="text">Result:</h3>
+        <div [innerText]="result"></div>            
+    </div>
+    <button type="button" class="btn button-outline-secondary" (click)="reset()">Reset</button>
+    <button *ngIf="!runningOnIos" type="button" class="btn button-outline-primary" (click)="copyText(result)">Copy Result</button>
+    <a class="btn btn-outline-primary" href="https://github.com/brew-install-buzzwords/meme-type" target="_blank" role="button">Github</a>
+    <a class="btn btn-outline-primary" href="https://www.brewinstallbuzzwords.com" target="_blank" role="button">Blog</a>
+</div>
+

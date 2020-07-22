@@ -1,0 +1,70 @@
+.input-area {
+    // border: solid white 1px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.result {
+    // border: solid white 1px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 1em;
+}
+
+textarea {
+	border: 3px solid #cccccc;
+    padding: 5px;
+    &:focus {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+    &:hover {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+    
+}
+
+select {
+	border: 3px solid #cccccc;
+    padding: 5px;
+    &:focus {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+    &:hover {
+        border:3px solid yellow;
+        transition: border-color .3s ease-in-out;
+    }
+}
+
+
+.btn {
+    color: white;
+    border: 3px solid #cccccc;
+    margin: 1em;
+    &:focus{
+        border:3px solid yellow;
+        color: yellow;
+    }
+    &:hover{
+        background-color: black;
+        color: yellow;
+        border:3px solid yellow;
+    }
+    &:active{
+        background-color: yellow;
+        color: black;
+    }
+}
+
+a.home-link {
+    text-decoration: none;
+    color: white;
+    &:hover {
+        color: black;
+        background-color: yellow;
+        transition: background 0.3s ease-in-out;
+    }
+}
+
