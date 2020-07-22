@@ -107,6 +107,8 @@ export class AppComponent implements OnInit{
   public model: ModelInterface;
   /** results */
   public result;
+  /** true if the client is using ios */
+  public runningOnIos: boolean;
 
   /**
    * options for the conversion type dropdown
@@ -165,6 +167,25 @@ export class AppComponent implements OnInit{
    */
   ngOnInit(): void {
     this.reset();
+    this.runningOnIos = this.iOS();
+  }
+
+  /**
+   * Determines whether user is on iOS
+   * Source: https://stackoverflow.com/a/9039885
+   * @returns true if user is on iOS
+   */
+  private iOS(): boolean {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
   }
 
   /**
