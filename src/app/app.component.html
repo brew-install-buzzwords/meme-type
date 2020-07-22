@@ -29,7 +29,7 @@
         <div [innerText]="result"></div>            
     </div>
     <button type="button" class="btn button-outline-secondary" (click)="reset()">Reset</button>
-    <button type="button" class="btn button-outline-primary" (click)="copyText(result)">Copy Result</button>
+    <button *ngIf="!runningOnIos" type="button" class="btn button-outline-primary" (click)="copyText(result)">Copy Result</button>
     <a class="btn btn-outline-primary" href="https://github.com/brew-install-buzzwords/meme-type" target="_blank" role="button">Github</a>
     <a class="btn btn-outline-primary" href="https://www.brewinstallbuzzwords.com" target="_blank" role="button">Blog</a>
 </div>
