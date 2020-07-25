@@ -1,6 +1,6 @@
 # MemeType
 
-MemeType is an angular web app that performs text transforms for various internet typing formats. The live app is running [here](https://memetype.brewinstallbuzzwords.com).
+MemeType is an angular web app that performs text transforms for various internet typing formats. The live app is running [here](https://memetype.brewinstallbuzzwords.com). See the blog post for this project [here](https://www.brewinstallbuzzwords.com/posts/meme-type).
 
 ![Screenshot](https://github.com/brew-install-buzzwords/meme-type/blob/develop/github-resources/app-screenshot.png)
 
