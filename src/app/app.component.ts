@@ -100,9 +100,18 @@ const homophones = {
 })
 export class AppComponent implements OnInit{
 
-
   /** app title */
   public title = 'meme-type';
+  /** app title in l33t speak */
+  public l33tTitle = 'm3m3-ty93';
+  /** the currently displayed app title */
+  public displayedTitle = this.title;
+  /** publisher name */
+  public publisher = 'brew install buzzwords';
+  /** publisher name in l33t speak */
+  public l33tPublisher = '8r3w 1n5t411 8uzzw0rd5';
+  /** the currently displayed publisher name */
+  public displayedPublisher = this.publisher;
   /** data model */
   public model: ModelInterface;
   /** results */
@@ -185,7 +194,7 @@ export class AppComponent implements OnInit{
       'iPod'
     ].includes(navigator.platform)
     // iPad on iOS 13 detection
-    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+    || (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
   }
 
   /**
@@ -226,7 +235,7 @@ export class AppComponent implements OnInit{
     const newTextArr = [];
     textArr.forEach(x => {
       newTextArr.push(x);
-      const emojiTag = `:${x.replace(/[^a-zA-Z ]/g, '')}:`
+      const emojiTag = `:${x.replace(/[^a-zA-Z ]/g, '')}:`;
       if (emojiTag !== '::') {
         newTextArr.push(emojiTag);
       }
