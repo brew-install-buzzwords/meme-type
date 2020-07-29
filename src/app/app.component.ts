@@ -89,7 +89,7 @@ const homophones = {
   z: 's',
 };
 
-const emojifyDefaults =[
+const emojifyDefaults = [
   '😈', '😂', '💦', '💯', '🔥', '🏈', '⏰', '😎', '😤', '💪', '🚶‍♂️',
   '🏃‍♂️', '🚶‍♀️', '🏃‍♀️', '🙏', '😔', '🤔', '☝️', '👌', '👀', '😝',
   '🏋️‍♂️', '⛷', '🚴‍♂️', '🚴‍♀️', '🏀', '🥊', '💰', '🤑',
@@ -251,7 +251,7 @@ export class AppComponent implements OnInit{
         newTextArr.push(match.char);
       } else {
         // second, look for keywords
-        const filteredEmojis = emojifyValues.filter(y =>  y['keywords']?.includes(searchText));
+        const filteredEmojis = emojifyValues.filter(y =>  y.keywords?.includes(searchText));
         if (filteredEmojis.length) {
           newTextArr.push(filteredEmojis[Math.floor(Math.random() * filteredEmojis.length)]['char']);
         } else {
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit{
           }
         }
       }
-    })
+    });
 
     return newTextArr.join(' ');
   }

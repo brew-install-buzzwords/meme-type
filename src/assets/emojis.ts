@@ -1,3 +1,4 @@
+/* tslint:disable */
 /**
  * Emoji mapping
  * Source: https://github.com/muan/emojilib
