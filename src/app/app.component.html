@@ -1,6 +1,6 @@
 <div class="col-md-12">
-    <h1 class="text-center base-margin-top"><a class="home-link" href="#" [innerText]="title"></a></h1>
-    <h5 class="text-center">a <a class="home-link" href="https://www.brewinstallbuzzwords.com" target="_blank">brew install buzzwords</a> site</h5>
+    <h1 class="text-center base-margin-top"><a (mouseenter) ="displayedTitle = l33tTitle" (mouseleave) ="displayedTitle = title" class="home-link" href="#" [innerText]="displayedTitle"></a></h1>
+    <h5 class="text-center">a <a (mouseenter) ="displayedPublisher = l33tPublisher" (mouseleave) ="displayedPublisher = publisher" class="home-link" href="https://www.brewinstallbuzzwords.com" target="_blank" [innerText]="displayedPublisher"></a> site</h5>
     <p></p>
 
     <div class="input-area">
@@ -31,6 +31,6 @@
     <button type="button" class="btn button-outline-secondary" (click)="reset()">Reset</button>
     <button *ngIf="!runningOnIos" type="button" class="btn button-outline-primary" (click)="copyText(result)">Copy Result</button>
     <a class="btn btn-outline-primary" href="https://github.com/brew-install-buzzwords/meme-type" target="_blank" role="button">Github</a>
-    <a class="btn btn-outline-primary" href="https://www.brewinstallbuzzwords.com" target="_blank" role="button">Blog</a>
+    <a class="btn btn-outline-primary" href="https://www.brewinstallbuzzwords.com/posts/meme-type" target="_blank" role="button">Blog Post</a>
 </div>
 
