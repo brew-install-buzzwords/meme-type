@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as Emoji from 'node-emoji';
-import * as randomEmoji from 'random-emoji';
+import { emojis } from '../assets/emojis';
 
 interface ModelInterface {
   /** the text area input */
@@ -90,6 +89,15 @@ const homophones = {
   z: 's',
 };
 
+const emojifyDefaults = [
+  '😈', '😂', '💦', '💯', '🔥', '🏈', '⏰', '😎', '😤', '💪', '🚶‍♂️',
+  '🏃‍♂️', '🚶‍♀️', '🏃‍♀️', '🙏', '😔', '🤔', '☝️', '👌', '👀', '😝',
+  '🏋️‍♂️', '⛷', '🚴‍♂️', '🚴‍♀️', '🏀', '🥊', '💰', '🤑',
+];
+
+const emojifyValues = Object.values(emojis)
+                            .filter(x => x.category !== 'flags');
+
 /**
  * AppComponent
  */
@@ -132,7 +140,7 @@ export class AppComponent implements OnInit{
       converter: this.altCapify,
     },
     {
-      label: 'student 🎸💣 athlete  mode 😉🆎💰 (rise  and 🍩 grind) ',
+      label: 'student 🎒 athlete 🏊‍♀️ mode (rise and grind) 😤😤😤',
       converter: this.emojify,
     },
     {
@@ -231,28 +239,33 @@ export class AppComponent implements OnInit{
    */
   public emojify(text: string): string {
     const textArr = text.split(/(\s+)/).filter( e => e.trim().length > 0 );
-
     const newTextArr = [];
+
     textArr.forEach(x => {
       newTextArr.push(x);
-      const emojiTag = `:${x.replace(/[^a-zA-Z ]/g, '')}:`;
-      if (emojiTag !== '::') {
-        newTextArr.push(emojiTag);
+      const searchText = x.replace(/[^a-zA-Z ]/g, '')
+                          .toLowerCase();
+      // first, look for exact match
+      const match = emojis[searchText];
+      if (match) {
+        newTextArr.push(match.char);
+      } else {
+        // second, look for keywords
+        const filteredEmojis = emojifyValues.filter(y =>  y.keywords?.includes(searchText));
+        if (filteredEmojis.length) {
+          newTextArr.push(filteredEmojis[Math.floor(Math.random() * filteredEmojis.length)]['char']);
+        } else {
+          // third, randomly select among common emojis
+          const emojiCount = (Math.random() * 6) - 2;
+          if (emojiCount > 0) {
+            const randomEmoji = emojifyDefaults[Math.floor((Math.random() * emojifyDefaults.length))];
+            newTextArr.push(randomEmoji.repeat(emojiCount));
+          }
+        }
       }
     });
 
-    return Emoji.emojify(newTextArr.join(' '), () => {
-      const emojiCount = (Math.random() * 6) - 2;
-      if (emojiCount > 0) {
-        const emojis = [];
-        randomEmoji.random({count: emojiCount}).forEach(x => {
-          emojis.push(x.character);
-        });
-        return emojis.join('');
-      } else {
-        return '';
-      }
-    });
+    return newTextArr.join(' ');
   }
 
   /**
