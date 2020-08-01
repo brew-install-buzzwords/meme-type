@@ -22,6 +22,13 @@
                 <option *ngFor="let opt of substitutionOptions" [value]="opt.value">{{opt.label}}</option>
             </select>
         </div>
+
+        <div class="form-group" *ngIf="model.conversionFunctionName === 'student 🎒 athlete 🏊‍♀️ mode (rise and grind) 😤😤😤' || model.conversionFunctionName === 'CLAPS 👏 AND 👏 ALL 👏 CAPS'">
+            <label for="formControlSelect2">Emoji skin tone</label>
+            <select [(ngModel)]="model.options.fitzpatrick" (change)="onChange()" class="form-control" id="exampleFormControlSelect3">
+                <option *ngFor="let opt of fitzpatrickScaleModifiers" [value]="opt">{{opt}}</option>
+            </select>
+        </div>
     </div>
 
     <div class="result" *ngIf="result">
