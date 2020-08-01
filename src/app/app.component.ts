@@ -90,9 +90,37 @@ const homophones = {
 };
 
 const emojifyDefaults = [
-  '😈', '😂', '💦', '💯', '🔥', '🏈', '⏰', '😎', '😤', '💪', '🚶‍♂️',
-  '🏃‍♂️', '🚶‍♀️', '🏃‍♀️', '🙏', '😔', '🤔', '☝️', '👌', '👀', '😝',
-  '🏋️‍♂️', '⛷', '🚴‍♂️', '🚴‍♀️', '🏀', '🥊', '💰', '🤑',
+  emojis.smiling_imp,
+  emojis.joy,
+  emojis.sweat_drops,
+  emojis['100'],
+  emojis.fire,
+  emojis.football,
+  emojis.alarm_clock,
+  emojis.sunglasses,
+  emojis.triumph,
+  emojis.muscle,
+  emojis.walking_man,
+  emojis.walking_woman,
+  emojis.running_man,
+  emojis.running_woman,
+  emojis.pray,
+  emojis.pensive,
+  emojis.thinking,
+  emojis.point_up_2,
+  emojis.ok_hand,
+  emojis.eyes,
+  emojis.stuck_out_tongue_closed_eyes,
+  emojis.weight_lifting_man,
+  emojis.weight_lifting_woman,
+  emojis.skier,
+  emojis.snowboarder,
+  emojis.biking_woman,
+  emojis.biking_man,
+  emojis.basketball,
+  emojis.boxing_glove,
+  emojis.moneybag,
+  emojis.money_mouth_face,
 ];
 
 const emojifyValues = Object.values(emojis)
@@ -127,33 +155,36 @@ export class AppComponent implements OnInit{
   /** true if the client is using ios */
   public runningOnIos: boolean;
 
+  /** fitzpatrick modifiers for emoji skin tone */
+  public fitzpatrickScaleModifiers = ['default', '🏻', '🏼', '🏽', '🏾', '🏿'];
+
   /**
    * options for the conversion type dropdown
    */
   public conversionOptions: ConversionOption[] = [
     {
       label: 'CLAPS 👏 AND 👏 ALL 👏 CAPS',
-      converter: this.clapify,
+      converter: this.clapify.bind(this),
     },
     {
       label: 'aLtErNaTiNg cApItAlIzAtIoN',
-      converter: this.altCapify,
+      converter: this.altCapify.bind(this),
     },
     {
       label: 'student 🎒 athlete 🏊‍♀️ mode (rise and grind) 😤😤😤',
-      converter: this.emojify,
+      converter: this.emojify.bind(this),
     },
     {
       label: 'l33t',
-      converter: this.l33t1fy,
+      converter: this.l33t1fy.bind(this),
     },
     {
       label: 'keysmash',
-      converter: this.smashify,
+      converter: this.smashify.bind(this),
     },
     {
       label: 's p a c e d   o u t',
-      converter: this.spaceify,
+      converter: this.spaceify.bind(this),
     },
   ];
 
@@ -210,12 +241,13 @@ export class AppComponent implements OnInit{
    * @param text the text to be transformed
    * @returns the text with clap emojis
    */
-  public clapify(text: string): string {
+  public clapify(text: string, options): string {
     const arr: string[] = text?.toUpperCase()
                                .split(/(\s+)/)
                                .filter( e => e.trim().length > 0 );
+    const clapEmoji = this.applyFitzpatrick(emojis.clap, options?.fitzpatrick);
 
-    return arr?.length ? arr.join(' 👏 ') : '';
+    return arr?.length ? arr.join(` ${clapEmoji} `) : '';
   }
 
   /**
@@ -233,11 +265,25 @@ export class AppComponent implements OnInit{
   }
 
   /**
+   * Applies fitzpatrick modifier to an emoji
+   * @param emoji the emoji to modify
+   * @param modifier the fitzpatrick modifier
+   * @returns the modified emoji character
+   */
+  private applyFitzpatrick(emoji, modifier): string {
+    if (emoji.fitzpatrick_scale && modifier && modifier !== 'default') {
+      console.log(`applying modifier ${modifier} to ${emoji}`);
+      return emoji.char + modifier;
+    }
+    return emoji.char;
+  }
+
+  /**
    * Inserts emojis into text
    * @param text the source text
    * @returns the text with emojis
    */
-  public emojify(text: string): string {
+  public emojify(text: string, options): string {
     const textArr = text.split(/(\s+)/).filter( e => e.trim().length > 0 );
     const newTextArr = [];
 
@@ -248,18 +294,20 @@ export class AppComponent implements OnInit{
       // first, look for exact match
       const match = emojis[searchText];
       if (match) {
-        newTextArr.push(match.char);
+        newTextArr.push(this.applyFitzpatrick(match, options?.fitzpatrick));
       } else {
         // second, look for keywords
         const filteredEmojis = emojifyValues.filter(y =>  y.keywords?.includes(searchText));
         if (filteredEmojis.length) {
-          newTextArr.push(filteredEmojis[Math.floor(Math.random() * filteredEmojis.length)]['char']);
+          const keywordEmoji = filteredEmojis[Math.floor(Math.random() * filteredEmojis.length)];
+          newTextArr.push(this.applyFitzpatrick(keywordEmoji, options?.fitzpatrick));
         } else {
           // third, randomly select among common emojis
           const emojiCount = (Math.random() * 6) - 2;
           if (emojiCount > 0) {
             const randomEmoji = emojifyDefaults[Math.floor((Math.random() * emojifyDefaults.length))];
-            newTextArr.push(randomEmoji.repeat(emojiCount));
+            const randomEmojiFitzpatrick = this.applyFitzpatrick(randomEmoji, options?.fitzpatrick);
+            newTextArr.push(randomEmojiFitzpatrick.repeat(emojiCount));
           }
         }
       }
