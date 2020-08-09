@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { altCapify, spaceify, clapify, emojify, l33t1fy, smashify, L33t1fySubstitution } from 'meme-type-npm/lib';
+import { altCapify, spaceify, clapify, emojify, l33t1fy, smashify, L33t1fySubstitution } from 'meme-type-npm';
 
 interface ModelInterface {
   /** the text area input */
