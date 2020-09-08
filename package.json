@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "ng build --prod && aws s3 sync dist/* s3://memetype.brewinstallbuzzwords.com --delete && aws cloudfront create-invalidation --distribution-id $MEMETYPE_DIST_ID --paths /*"
   },
   "private": true,
   "dependencies": {
@@ -19,8 +20,7 @@
     "@angular/platform-browser-dynamic": "^10.0.14",
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
-    "node-emoji": "^1.10.0",
-    "random-emoji": "^1.0.2",
+    "meme-type-npm": "^1.0.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
